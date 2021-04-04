@@ -19,10 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="AbstractCollection.cpp" />
     <ClCompile Include="ArraySequence.cpp" />
-    <ClCompile Include="Dumb.cpp" />
-    <ClCompile Include="DynamicArray.cpp" />
     <ClCompile Include="LinkedList.cpp" />
     <ClCompile Include="LinkedListSequence.cpp" />
     <ClCompile Include="Main.cpp" />
@@ -31,9 +28,7 @@
     <ClCompile Include="testLinkedList.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="AbstractCollection.h" />
     <ClInclude Include="ArraySequence.h" />
-    <ClInclude Include="Dumb.h" />
     <ClInclude Include="DynamicArray.h" />
     <ClInclude Include="LinkedList.h" />
     <ClInclude Include="LinkedListSequence.h" />

@@ -18,13 +18,7 @@
     <ClCompile Include="ArraySequence.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="DynamicArray.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
     <ClCompile Include="Main.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="AbstractCollection.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
     <ClCompile Include="LinkedListSequence.cpp">
@@ -37,9 +31,6 @@
       <Filter>Исходные файлы</Filter>
     </ClCompile>
     <ClCompile Include="Sequence.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="Dumb.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
     <ClCompile Include="testLinkedList.cpp">
@@ -59,13 +50,7 @@
     <ClInclude Include="ArraySequence.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="Dumb.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
     <ClInclude Include="LinkedListSequence.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="AbstractCollection.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="Queque.h">
