@@ -72,6 +72,18 @@ public:
 		data = newData;
 		lenght = newSize;
 	}
+	void ResizeRight(int newSize)
+	{
+		assert(newSize > 0);
+		T* newData = new T[newSize];
+		int tempSize = 0;
+		tempSize = (newSize > lenght) ? lenght : newsize;
+		for (int i = 1; i < tempSize; i++)
+			newData[i] = data[i];
+		delete data;
+		data = newData;
+		lenght = newSize;
+	}
 };
 
 
