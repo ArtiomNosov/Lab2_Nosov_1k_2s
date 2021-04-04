@@ -160,7 +160,13 @@ public:
 		}
 
 	}
-	LinkedList<T>* Concat(LinkedList<T>* list); //Сцепляет два списка
+	//Сцепляет два списка
+	LinkedList<T>* Concat(LinkedList<T>* list) 
+	{
+		for (int i = 0; i < list->lenght; i++)
+			Append(list->Get(i));
+		return this;
+	}
 	
 };
 
