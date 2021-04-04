@@ -20,30 +20,33 @@ public:
 	}
 	DynamicArray(int size) //	Создать массив заданной длины
 	{
-		data = new T[count];
-		lenght = count;
+		data = new T[size];
+		lenght = size;
 	}
-	DynamicArray(const DynamicArray<T>& dynamicArray) //	Копирующий конструктор
+	T operator[](int const index)
 	{
-		lenght = dynamicArray.GetLenght();
+		return data[index];
+	}
+	DynamicArray(const DynamicArray<T>* dynamicArray) //	Копирующий конструктор
+	{
+		lenght = dynamicArray->lenght;
 		data = new T[lenght];
 		for (int i = 0; i < lenght; i++)
 		{
-			data[i] = dynamicArray[i];
+			data[i] = dynamicArray->Get(i);
 		}
 	}
 
 // Декомпозиция
-	T operator[](const int index)
-	{
-		return data[index];
-	}
+	
 	// Получить элемент по индексу. 
 	// Может выбрасывать исключения :	− IndexOutOfRange(если индекс отрицательный, больше 
 	// или равен числу элементов или указывает на не заданный элемент)
 	T Get(int index)
 	{
-		return this->[i];
+		assert(index >= 0);
+		assert(index < lenght);
+		return data[index];
 	}
 	int GetSize() //	Получить размер массива
 	{
@@ -65,8 +68,8 @@ public:
 		assert(newSize > 0);
 		T* newData = new T[newSize];
 		int tempSize= 0;
-		tempSize = (newSize > lenght) ? lenght : newsize;
-		for (int i = 0; i < tempSize-1; i++)
+		tempSize = (newSize > lenght) ? lenght : newSize;
+		for (int i = 0; i < tempSize; i++)
 			newData[i] = data[i];
 		delete data;
 		data = newData;
@@ -77,8 +80,8 @@ public:
 		assert(newSize > 0);
 		T* newData = new T[newSize];
 		int tempSize = 0;
-		tempSize = (newSize > lenght) ? lenght : newsize;
-		for (int i = 1; i < tempSize; i++)
+		tempSize = (newSize > lenght) ? lenght : newSize;
+		for (int i = 0; i < tempSize; i++)
 			newData[i] = data[i];
 		delete data;
 		data = newData;

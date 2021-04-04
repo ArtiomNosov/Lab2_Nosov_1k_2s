@@ -2,7 +2,6 @@
 #include <string>   // Стандартная библиотека для работы состроками
 #include <locale>
 
-#include "Dumb.h"   //Дамб пока пустой. Там заготовка для строки
 #include "testUnit.h"
 #include "LinkedList.h"
 using namespace std;
@@ -29,6 +28,8 @@ int main()
 {
     setlocale(LC_ALL, "Russian");
     testLinkedListInt();
+    cout << endl;
+    testDynamicArrayChar();
 
     system("pause>0");
 }

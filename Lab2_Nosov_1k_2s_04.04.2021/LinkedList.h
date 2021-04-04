@@ -146,6 +146,8 @@ public:
 	void InsertAt(T item, int index) // Вставляет элемент в заданную позицию. 
 									// Может выбрасывать исключения : − IndexOutOfRange(если индекс отрицательный или больше / равен числу элементов)
 	{
+		assert(index>=0);
+		assert(index < lenght);
 		Item<T>* itemBefor = (*this)[index];
 		if (itemBefor == NULL)
 			Append(item);
@@ -157,6 +159,7 @@ public:
 			buf->next = itemBefor->next;
 			itemBefor->next = buf;
 			itemBefor->next->previous = buf;
+			lenght++;
 		}
 
 	}
