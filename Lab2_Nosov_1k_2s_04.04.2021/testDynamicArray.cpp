@@ -39,7 +39,7 @@ int testDynamicArrayChar(void)
 	bool flag = true;
 	DynamicArray<char> DynArr1(arr, ITEMS_COUNT);
 	DynamicArray<char> DynArr2(ITEMS_COUNT);
-	DynamicArray<char> DynArr3(DynArr1);
+	DynamicArray<char> DynArr3(&DynArr1);
 
 	cout << "Тест конструктора №1 и оператора []" << endl;
 	cout << "DynArr1: " << endl;

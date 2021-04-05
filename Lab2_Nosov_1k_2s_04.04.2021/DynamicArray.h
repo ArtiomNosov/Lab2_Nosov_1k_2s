@@ -27,7 +27,7 @@ public:
 	{
 		return data[index];
 	}
-	DynamicArray(const DynamicArray<T>* dynamicArray) //	Копирующий конструктор
+	DynamicArray(DynamicArray<T>* dynamicArray) //	Копирующий конструктор
 	{
 		lenght = dynamicArray->lenght;
 		data = new T[lenght];
