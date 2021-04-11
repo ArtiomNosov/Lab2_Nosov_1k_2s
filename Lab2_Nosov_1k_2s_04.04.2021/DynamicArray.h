@@ -2,6 +2,7 @@
 #include <cassert>
 
 //TODO:Тесты на все функции
+// TODO: Добавление в конец.
 
 template <class T> class DynamicArray
 {
@@ -27,13 +28,13 @@ public:
 	{
 		return data[index];
 	}
-	DynamicArray(DynamicArray<T>* dynamicArray) //	Копирующий конструктор
+	DynamicArray(DynamicArray<T>& dynamicArray) //	Копирующий конструктор
 	{
-		lenght = dynamicArray->lenght;
+		lenght = dynamicArray.lenght;
 		data = new T[lenght];
 		for (int i = 0; i < lenght; i++)
 		{
-			data[i] = dynamicArray->Get(i);
+			data[i] = dynamicArray.Get(i);
 		}
 	}
 

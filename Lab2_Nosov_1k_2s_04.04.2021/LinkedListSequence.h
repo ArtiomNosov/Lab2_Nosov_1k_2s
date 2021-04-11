@@ -2,15 +2,30 @@
 #include "Sequence.h"
 #include "linkedList.h"
 
-// TODO: Объяснить Артёму что здесь происходит
 template <class T> class LinkedListSequence : Sequence<T>
 {
 private:
 	LinkedList<T>* internalList;
-
-
 public:
-	LinkedListSequence(T* items, int count);
+	//Конструкторы
+	LinkedListSequence(LinkedList <T>& list)
+	{
+		internalList = new LinkedList<T>(list);
+	};
+	LinkedListSequence()
+	{ 
+		internalList = new LinkedList<T>;
+	};
+	LinkedListSequence(T* items, int count)
+	{
+		internalList = new LinkedList<T>(items, count);
+	};
+	// Деструктор
+	~LinkedListSequence()
+	{
+		delete internalList;
+	}
+
 	T GetFirst()
 	{
 		return internalList->GetFirst();
@@ -24,14 +39,19 @@ public:
 		return internalList->Get(index);
 	}
 	// TODO:Вставить конструктор, чтобы пользователь получал указатель на новый Sequence
-	Sequence<T>* GetSubsequence(int startIndex, int endIndex)
+	LinkedListSequence<T>* GetSubsequence(int startIndex, int endIndex)
 	{
-		internalList = internalList->GetSubsequence(startIndex, endIndex);
-		return this;
+		LinkedListSequence<T>* bufList = new LinkedListSequence<T>;
+		((LinkedListSequence<T>*)bufList)->internalList = internalList->GetSubList(startIndex, endIndex);
+		return bufList;
 	}
 	int GetLength()
 	{
-		return internalList->GetLenght;
+		return internalList->GetLength();
+	}
+	void Set(int index, T data)
+	{
+		internalList->Set(index, data);
 	}
 	void Append(T item)
 	{
@@ -45,10 +65,10 @@ public:
 	{
 		internalList->InsertAt(item, index);
 	}
-	LinkedListSequence <T>* Concat(LinkedListSequence <T>* list)
+	Sequence <T>* Concat(Sequence <T>* list)
 	{
-		internalList->Concat(list->internalList);
-		return this;
+		internalList->Concat(((LinkedListSequence<T> *)list)->internalList);
+		return (Sequence <T>*)this;
 	}
 };
 

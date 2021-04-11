@@ -38,7 +38,17 @@ public:
 			Append(items[i]);
 		}
 	}
-	LinkedList(const LinkedList <T>& list) {}; // Копирующий конструктор
+	// TODO: Сделать реализацию LinkedList
+	LinkedList(const LinkedList <T>& list)  // Копирующий конструктор
+	{
+		head = NULL;
+		tail = NULL;
+
+		for (int i = 0; i < list.lenght; i++)
+		{
+			Append(list.Get(i));
+		}
+	}; 
 // Декомпозиция
 	T GetFirst() // Получить первый элемент в списке. Может выбрасывать исключения : − IndexOutOfRange(если список пуст)
 	{
@@ -88,7 +98,7 @@ public:
 	{
 		assert(startIndex >= 0);
 		assert(endIndex <= lenght);
-		assert(startIndex <= endIndex);
+
 		LinkedList<T>* buf = new LinkedList<T>();
 		for (int i = startIndex; i <= endIndex; i++)
 		{
@@ -100,6 +110,23 @@ public:
 	int GetLength()	// Получить длину списка
 	{
 		return lenght;
+	}
+
+	void Set(int index, T data)
+	{
+		assert(!(index == 0 && lenght == 0));
+
+		//cout << "test - " << "index = " << index << endl;
+		assert(index >= 0);
+		assert(index < lenght);
+		Item<T>* buf = head;
+		//cout << "test - " << "lenght = " << lenght << endl;
+		//cout <<"test - "<<"head->data = "<< head->data<<endl;
+		for (int i = 0; i < index; i++)
+		{
+			buf = buf->next;
+		}
+		buf->data = data;
 	}
 
 // Операции
@@ -147,7 +174,7 @@ public:
 									// Может выбрасывать исключения : − IndexOutOfRange(если индекс отрицательный или больше / равен числу элементов)
 	{
 		assert(index>=0);
-		assert(index < lenght);
+		assert(index < lenght); //
 		Item<T>* itemBefor = (*this)[index];
 		if (itemBefor == NULL)
 			Append(item);

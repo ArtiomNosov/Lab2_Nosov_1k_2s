@@ -19,12 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ArraySequence.cpp" />
-    <ClCompile Include="LinkedList.cpp" />
-    <ClCompile Include="LinkedListSequence.cpp" />
     <ClCompile Include="Main.cpp" />
-    <ClCompile Include="Queque.cpp" />
-    <ClCompile Include="Sequence.cpp" />
     <ClCompile Include="testDynamicArray.cpp" />
     <ClCompile Include="testLinkedList.cpp" />
   </ItemGroup>

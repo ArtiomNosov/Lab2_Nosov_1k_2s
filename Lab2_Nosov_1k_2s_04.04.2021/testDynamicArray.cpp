@@ -22,7 +22,7 @@ char randomCharSymbol(void)
 
 int testDynamicArrayChar(void)
 {
-	engine.seed(std::time(nullptr)); // Семя для рандома
+	engine.seed(10000+std::time(nullptr)); // Семя для рандома
 
 	char arr[ITEMS_COUNT] = { 0 };
 
@@ -39,7 +39,7 @@ int testDynamicArrayChar(void)
 	bool flag = true;
 	DynamicArray<char> DynArr1(arr, ITEMS_COUNT);
 	DynamicArray<char> DynArr2(ITEMS_COUNT);
-	DynamicArray<char> DynArr3(&DynArr1);
+	DynamicArray<char> DynArr3(DynArr1);
 
 	cout << "Тест конструктора №1 и оператора []" << endl;
 	cout << "DynArr1: " << endl;
@@ -72,7 +72,6 @@ int testDynamicArrayChar(void)
 	}
 	flag ? cout << "Succes" << endl : cout << "Fail!";
 
-	// TODO: Доделать тесты. Не работает Resize.
 	cout << "Тест Resize" << endl;
 	cout << "Перевёрнутый массив для вписывания: " << endl;
 	for (int i = 0; i < ITEMS_COUNT; i++)

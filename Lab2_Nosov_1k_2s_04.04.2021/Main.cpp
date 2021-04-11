@@ -4,6 +4,9 @@
 
 #include "testUnit.h"
 #include "LinkedList.h"
+#include "LinkedListSequence.h"
+#include "Sequence.h"
+#include "Queque.h"
 using namespace std;
 
 // вариант 14. 
@@ -21,15 +24,31 @@ using namespace std;
 //	− сравнение(равенство) двух множеств
 // 
 // − Перегрузка операторов (например, оператора [] для обращения/задания значения элемента по индексу).
-// − Для векторов, матриц и многочленов – реализовать основные операции с помощью map - reduce(и zip - unzip).
-// − Реализовать функцию Split, которая данную последовательность элементов разобьет на отдельные фрагменты.
-//   Границы между фрагментами – это элементы, удовлетворяющие условию, которое передается как параметр.
 int main()
 {
     setlocale(LC_ALL, "Russian");
-    testLinkedListInt();
+    //LinkedListSequence<float>* mySeq = new LinkedListSequence<float>;
+    float arr[3] = { 1.5, 2.3, 3.14 };
+    /*mySeq->Append(arr[0]);
+    mySeq->Append(arr[1]);
+    mySeq->Append(arr[2]);
+    cout << "Элемент под номером нуль " << mySeq->Get(0) << endl;
+    cout << "Элемент под номером один " << mySeq->Get(1) << endl;
+    cout << "Элемент под номером два " << mySeq->Get(2)<<endl;
+    cout << "Длинна списка " << mySeq->GetLength() << endl;*/
+
+    Queue<float>* que = new Queue<float>;
+    que->push(arr[0]);
+    que->push(arr[1]);
+    que->push(arr[2]);
+    que->printQueue();
+    cout << "Элемент под номером нуль " << que->pop() << endl;
+    cout << "Элемент под номером один " << que->pop() << endl;
+    cout << "Элемент под номером два " << que->pop() << endl;
+    cout << "Длинна списка " << que->Size() << endl;
+    //testLinkedListInt();
     cout << endl;
-    testDynamicArrayChar();
+    //testDynamicArrayChar();
 
     system("pause>0");
 }

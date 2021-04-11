@@ -1,7 +1,6 @@
 #pragma once
 #include "Sequence.h"
 
-
 template <class T> class ArraySequence : Sequence<T>
 {
 private:
@@ -36,6 +35,10 @@ public:
 	{
 		return items->lenght;
 	}
+	void Set(int index, T value) // Задать элемент по индексу. Может выбросить IndexOutOfRange
+	{
+		items->Set(index, value);
+	}
 
 	// Добавляет элемент в конец списка
 	// TODO: Сделать реализацию без resize в Append, Prepend, InsertAt
@@ -45,6 +48,8 @@ public:
 		items->Set(items->lenght, item)
 	}
 	// Добавляет элемент в начало списка
+	
+	// TODO: Подумать над балансировкой массива.
 	void Prepend(T item)
 	{
 		items->ResizeRight(items->lenght + 1);
@@ -66,6 +71,10 @@ public:
 		items->Resize(items->lenght + list->items->lenght);
 		for (int i = 0 ;i < list->items->lenght; i++)
 			items->Append(list->items->Get(i);
+	}
+	bool subsequenceSearch()
+	{
+
 	}
 };
 

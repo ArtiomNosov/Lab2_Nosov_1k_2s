@@ -1,36 +1,95 @@
+п»ї
 
-
-#include <cassert> // для assert
+#include <cassert> // РґР»СЏ assert
 #include <iostream>
 
+using namespace std;
+//РјРѕРё РёРЅРєР»СЋРґС‹
+#include "LinkedListSequence.h"
 
-//template <class T>
-//class Queue : public PushPopContainer<T> {
-//private:
-//    T* arr; // указатель на очередь
-//    const int size; // Емкость очереди
-//    int begin, end; // начало, конец очереди
-//    int elemCT; //счетчик элементов
-//public:
-//    Queue(int = 10); //размер очереди = 10 элементам
-//    Queue(const Queue<T>&); // конструктор копирования
-//    ~Queue();
-//
-//
-//    inline void push(const T&); // добавить элемент в очередь
-//    inline T pop(); // удалить элемент из очереди
-//    inline void printQueue(); // вывод очереди
-//    inline const T& Peek(int) const; // n-й элемент от вершины очереди
-//    inline int Size() const;  // получить размер очереди
-//    inline bool isEmpty() const; // пуста ли очередь
-//};
-//
-//
-//// конструктор по умолчанию
-//template <class T>
-//Queue<T>::Queue(int sizeQueue) : size(sizeQueue), // инициализация константы
-//begin(0), end(0), elemCT(0)
-//{
-//    // дополнительная позици поможет нам различать конец и начало очереди
-//    arr = new T[size + 1];
-//}
+//	в€’ map, where
+//	в€’ РѕР±СЉРµРґРёРЅРµРЅРёРµ
+//  - РР·РІР»РµС‡РµРЅРёРµРїРѕРґРїРѕСЃР»РµРґРѕРІР°С‚РµР»СЊРЅРѕСЃС‚Рё(РїРѕ Р·Р°РґР°РЅРЅС‹Рј РёРЅРґРµРєСЃР°Рј)
+//  в€’ РџРѕРёСЃРє РЅР° РІС…РѕР¶РґРµРЅРёРµ РїРѕРґРїРѕСЃР»РµРґРѕРІР°С‚РµР»СЊРЅРѕСЃС‚Рё
+
+template <class T>
+class Queue{
+private:
+    LinkedListSequence<T>* internalListSequence; // СѓРєР°Р·Р°С‚РµР»СЊ РЅР° РѕС‡РµСЂРµРґСЊ
+public:
+
+    // РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂС‹
+    Queue() 
+    { 
+        internalListSequence = new LinkedListSequence<T>; 
+    }; 
+    Queue(const Queue<T>& que) // РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РєРѕРїРёСЂРѕРІР°РЅРёСЏ
+    {
+        internalListSequence = new LinkedListSequence<T>;
+        for (int i = 0; i< que.Size();i++)
+        {
+            internalListSequence->Append(que.Peek(i));
+        }
+    }; 
+    // Р”РµСЃС‚СЂСѓРєС‚РѕСЂ
+    ~Queue()
+    {
+        delete internalListSequence;
+    };
+
+
+    void push(const T& data) // РґРѕР±Р°РІРёС‚СЊ СЌР»РµРјРµРЅС‚ РІ РѕС‡РµСЂРµРґСЊ
+    {
+        internalListSequence->Append(data);
+    }; 
+    T pop() // СѓРґР°Р»РёС‚СЊ СЌР»РµРјРµРЅС‚ РёР· РѕС‡РµСЂРµРґРё
+    {
+        T result = internalListSequence->GetFirst();
+        internalListSequence = (LinkedListSequence<T>*)internalListSequence->GetSubsequence(1, internalListSequence->GetLength() - 1);
+        return result;
+    }; 
+    // TODO: Р•СЃР»Рё Р±СѓРґРµС‚ СЃР»РѕР¶РЅРѕ СЃРѕСЃС‚РѕРІРЅРѕР№ С‚РёРї РєР»Р°СЃСЃ, С‚Рѕ РІ РЅС‘Рј РѕРїРёСЃС‹РІР°РµРј РїРµСЂРµРіСЂСѓР·РєСѓ РѕРїРµСЂР°С‚РѕСЂР° СЃС‚СЂРµР»РѕС‡РєРё <<
+    void printQueue()// РІС‹РІРѕРґ РѕС‡РµСЂРµРґРё
+    {
+        for (int i = 0; i < internalListSequence->GetLength();i++)
+        {
+            cout <<i<<".  "<<internalListSequence->Get(i)<< endl;
+        }
+    }; 
+    T& Peek(int index) // n-Р№ СЌР»РµРјРµРЅС‚ РѕС‚ РІРµСЂС€РёРЅС‹ РѕС‡РµСЂРµРґРё
+    {
+        return internalListSequence->Get(index);
+    }; 
+    int Size() // РїРѕР»СѓС‡РёС‚СЊ СЂР°Р·РјРµСЂ РѕС‡РµСЂРµРґРё
+    {
+        return internalListSequence->GetLength();
+    };  
+    bool isEmpty() // РїСѓСЃС‚Р° Р»Рё РѕС‡РµСЂРµРґСЊ
+    {
+        return (internalListSequence->GetLength() < 1)? true : false;
+    }; 
+    void map(T mupFunc(T& arg))
+    {
+        internalListSequence->map(mupFunc);
+    }
+    
+    void where(T whereFunc(T& arg))
+    {
+        internalListSequence->where(whereFunc);
+    }
+    Queue<T>* Concat(Queue<T>& que2)
+    {
+        internalListSequence->Concat(que2.internalListSequence);
+        return this;
+    }
+    Queue<T>* GetSubsequence(int startIndex, int endIndex)
+    {
+        Queue<T>* bufQue = new Queue<T>;
+        bufQue->internalListSequence = internalListSequence->GetSubsequence(startIndex, endIndex);
+        return bufQue;
+    }
+    bool SubSequenceSearch(Queue<T>& que)
+    {
+        return internalListSequence->GetSubsequence(que.internalListSequence);
+    };
+};
