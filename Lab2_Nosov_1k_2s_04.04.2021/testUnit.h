@@ -15,3 +15,6 @@ char randomCharSymbol(void);
 
 //Проверяет работу динамичесого массива с char
 int testDynamicArrayChar(void);
+
+//Тестирование Queue пользовательский ввод
+int testQueueUI(int userType);
