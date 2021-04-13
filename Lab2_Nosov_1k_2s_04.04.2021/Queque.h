@@ -15,7 +15,7 @@ using namespace std;
 template <class T>
 class Queue{
 private:
-    LinkedListSequence<T>* internalListSequence; // указатель на очередь
+    LinkedListSequence<T>* internalListSequence; // указатель на связный список
 public:
 
     // Конструкторы
@@ -42,7 +42,8 @@ public:
     {
         internalListSequence->Append(data);
     }; 
-    T pop() // удалить элемент из очереди
+    //pol вместо pop по соглашению
+    T pop() // удалить элемент из начала очереди
     {
         T result = internalListSequence->GetFirst();
         internalListSequence = (LinkedListSequence<T>*)internalListSequence->GetSubsequence(1, internalListSequence->GetLength() - 1);
@@ -72,7 +73,6 @@ public:
     {
         internalListSequence->map(mupFunc);
     }
-    
     void where(T whereFunc(T& arg))
     {
         internalListSequence->where(whereFunc);

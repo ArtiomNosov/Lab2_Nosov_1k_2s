@@ -33,7 +33,7 @@ UIMenu menuLab2_lvl_0((int)3, strForListMenuLevel0);
 int main()
 {
     setlocale(LC_ALL, "Russian");
-    int userСhoice = menuLab2_lvl_0.userShoes("***Главное меню***\n\nТестирование коллекций с:");
+    int userСhoice = menuLab2_lvl_0.userСhoice("***Главное меню***\n\nТестирование коллекций с:");
     if (userСhoice != 0)
         testQueueUI(userСhoice);
     //LinkedListSequence<float>* mySeq = new LinkedListSequence<float>;
