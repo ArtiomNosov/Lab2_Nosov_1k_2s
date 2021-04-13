@@ -25,15 +25,16 @@ int UIMenu::user—hoice(string title)
 		cout<<title<<endl;
 		for (int i = 0; i < len; i++)
 			cout << i + 1<< ") "<<shoice[i]<<endl;
-		cout<<"Make your choice (0 - Exit):"<<endl;
+		cout<<"Make your choice (0 - Exit):";
 		ch = cin.get();
 	} while ((ch < '0') || (ch > ((char)'0' + len)));
-	cout<<ch<<endl;
+	//cout<<ch;
 	return (int)ch - '0';
 };
 //
 void UIMenu::waitingUserPressEnter(void)
 {
 	cout<<"PRESS ENTER TO COUNTINUE!"<<endl;
-	do {} while (cin.get() != 13);
+	//cin.clear();
+	system("pause>0");
 }

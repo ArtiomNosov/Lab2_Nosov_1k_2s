@@ -6,6 +6,7 @@
 using namespace std;
 //мои инклюды
 #include "LinkedListSequence.h"
+#include "MyComplex.h"
 
 //	− map, where
 //	− объединение
@@ -57,7 +58,7 @@ public:
             cout <<i<<".  "<<internalListSequence->Get(i)<< endl;
         }
     }; 
-    T& Peek(int index) // n-й элемент от вершины очереди
+    T Peek(int index) // n-й элемент от вершины очереди
     {
         return internalListSequence->Get(index);
     }; 
@@ -69,13 +70,15 @@ public:
     {
         return (internalListSequence->GetLength() < 1)? true : false;
     }; 
-    void map(T mupFunc(T& arg))
+    void map(T mupFunc(T arg))
     {
         internalListSequence->map(mupFunc);
     }
-    void where(T whereFunc(T& arg))
+    void wwhere(bool(*whereFunc)(T))
     {
-        internalListSequence->where(whereFunc);
+        LinkedListSequence<T>* buf = internalListSequence;
+        internalListSequence = internalListSequence->wwhere(whereFunc);
+        delete buf;
     }
     Queue<T>* Concat(Queue<T>& que2)
     {
@@ -90,6 +93,6 @@ public:
     }
     bool SubSequenceSearch(Queue<T>& que)
     {
-        return internalListSequence->GetSubsequence(que.internalListSequence);
+        return internalListSequence->SubSequenceSearch(que.internalListSequence);
     };
 };

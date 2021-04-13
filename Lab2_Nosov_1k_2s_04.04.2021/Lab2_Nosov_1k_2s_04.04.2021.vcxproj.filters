@@ -30,6 +30,9 @@
     <ClCompile Include="testQueue.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="MyComplex.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DynamicArray.h">
@@ -54,6 +57,9 @@
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="UI.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="MyComplex.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,4 +1,5 @@
 #pragma once
+#include "MyComplex.h"
 //Темплейт класс какого-то типа T
 template <class T> class Sequence
 {
@@ -25,9 +26,9 @@ public:
 	virtual void InsertAt(T item, int index) = 0; // Вставляет элемент в заданную позицию
 	virtual Sequence <T>* Concat(Sequence <T>* list) = 0; // Сцепляет два списка
 	//map, reduce, zip, unzip, where
-	void map(T mupFunc(T& arg))
+	void map(T mupFunc(T arg))
 	{
-		for (int i = 0; i < GetLength; i++)
+		for (int i = 0; i < GetLength(); i++)
 		{
 			Set(i, mupFunc(Get(i)));
 		}
@@ -41,25 +42,16 @@ public:
 		}
 		return buf;
 	}
-	Sequence* where(bool whereFunc(T arg))
-	{
-		Sequence* buf = new Sequence;
-		for (int i = 0; i < GetLength(); i++)
-		{
-			if( whereFunc(Get(i)) ) buf->Append( Get(i) );
-		}
-		return buf;
-	}
 	// TODO: Много тестов SubSequenceSearch
 	bool SubSequenceSearch(Sequence<T>* seq)
 	{
 		bool result = false;
-		for (int i = 0; i < GetLength()-seq->GetLength(); i++)
+		for (int i = 0; i < GetLength() - seq->GetLength(); i++)
 		{
 			result = true;
 			for (int j = 0; j < seq->GetLength(); j++)
 			{
-				result &= (Get(i + j) == seq->Get(j));
+				result &= (Get(i + j) == (seq->Get(j)));
 			};
 			if (result == true)break;
 		}

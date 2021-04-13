@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="MyComplex.cpp" />
     <ClCompile Include="testDynamicArray.cpp" />
     <ClCompile Include="testLinkedList.cpp" />
     <ClCompile Include="testQueue.cpp" />
@@ -30,6 +31,7 @@
     <ClInclude Include="DynamicArray.h" />
     <ClInclude Include="LinkedList.h" />
     <ClInclude Include="LinkedListSequence.h" />
+    <ClInclude Include="MyComplex.h" />
     <ClInclude Include="Queque.h" />
     <ClInclude Include="Sequence.h" />
     <ClInclude Include="testUnit.h" />

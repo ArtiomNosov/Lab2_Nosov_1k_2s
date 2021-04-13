@@ -2,7 +2,7 @@
 #include "Sequence.h"
 #include "linkedList.h"
 
-template <class T> class LinkedListSequence : Sequence<T>
+template <class T> class LinkedListSequence : public Sequence<T>
 {
 private:
 	LinkedList<T>* internalList;
@@ -70,5 +70,15 @@ public:
 		internalList->Concat(((LinkedListSequence<T> *)list)->internalList);
 		return (Sequence <T>*)this;
 	}
+	LinkedListSequence<T>* wwhere(bool (*whereFunc)(T))
+	{
+		LinkedListSequence<T>* buf = new LinkedListSequence<T>;
+		for (int i = 0; i < GetLength(); i++)
+		{
+			if ( whereFunc(Get(i)) ) buf->Append(Get(i));
+		}
+		return (LinkedListSequence<T>*)buf;
+	}
+	
 };
 

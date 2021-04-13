@@ -1,39 +1,37 @@
-#include <complex.h>
 #include <string>
 
+#include "MyComplex.h"
 #include "UI.h"
 #include "Queque.h"
 
+
+typedef class complex complexType;
 //Вид коллекции
 string strForListMenuLevel1[9] = { "Push", "Peek", "Size", "Map", "Where", "Concat", "GetSubsequence", "SubSequenceSearch", "pol" };
 UIMenu menuLab2_lvl_1_functions(9, strForListMenuLevel1);
 
-int testQueueUI(int userType)
-{ 
-	switch (userType)
-	{
-	case 1: //Целые числа
-		cout << "Введите количество целых чисел" << endl;
-		testQueue((int)1);
-		break;
-	case 2: //Комплексные числа
-		cout << "Введите количество комплексных чисел" << endl;
-		//testQueue<_Fcomplex>();
-		break;
-	case 3: //Строки
-		cout << "Введите количество строк" << endl;
-		//testQueue<string>();
-		break;
-	default:
-		break;
-	}
-}
-
 //Функция для mup T mupFunc(T& arg)
 template <typename T>
-T mupFunc(T& arg)
+T mapFunc(T arg)
 {
-	return T + T;
+	return arg + arg;
+}
+
+//bool whereIntFunc(int& arg)
+//{
+//	return arg > 5;
+//}
+//
+//bool whereComplexFunc(complexType& arg)
+//{
+//	complexType hol(5.0,6.0);
+//	
+//	return arg > hol;
+//}
+template <typename T>
+bool whereStringFunc(T arg)
+{
+	return true;
 }
 
 template <typename T>
@@ -50,107 +48,138 @@ int printData(T data)
 }
 
 template <typename T>
-int testQueue(T data)
+void testQueue()
 {
 	Queue<T>* que1;
 	Queue<T>* que2;
 	que1 = new Queue<T>;
 	que2 = new Queue<T>;
-	int userType;
+	int userType = 1;
+	char userChoice;
+	T userElem;
+	int SubSize, n1, n2;
+	cout<<"Наберите число элементов, которые хотите добавить в первую очередь: ";
+	cin >> userType;
+	for (int i = 0; i < userType; i++)
+	{
+		cin >> userElem;
+		que1->push(userElem);
+	}
+	cout << "Наберите число элементов, которые хотите добавить во вторую очередь: ";
+	cin >> userType;
+	for (int i = 0; i < userType; i++)
+	{
+		cin >> userElem;
+		que2->push(userElem);
+	}
 	do {
-		userType = menuLab2_lvl_1_functions.userСhoice();
+		userType = menuLab2_lvl_1_functions.userСhoice("Выберите функцию");
 		switch (userType)
 		{
 		case 1:
 			cout << "Выберите очередь 1 или 2: ";
-			char userChoise;
-			cin >> userChoise;
+			cin >> userChoice;
 			cout << "Введите элемент: ";
-			T userElem;
-			//cin >> userElem;
-			(userChoise == '1') ? que1->push(userElem) : que2->push(userElem);
+			cin >> userElem;
+			(userChoice == '1') ? que1->push(userElem) : que2->push(userElem);
 			break;
 		case 2:
 			cout << "Выберите очередь 1 или 2: ";
-			char userChoise;
-			cin >> userChoise;
-			cout << "Введите элемент номер элемента: ";
+			cin >> userChoice;
+			cout << "Введите номер элемента: ";
 			int n;
 			cin >> n;
-			if (n<0 || n > que1->Size() && userChoise == '1' || n > que2->Size())
+			if (n<0 || n > (que1->Size()-1) && userChoice == '1' || n > (que2->Size()-1)&& userChoice != '1')
 			{
 				cout << "Нет элемента с таким номером в очереди ";
-				cout << (userChoise == '1') ? "1" : "2" << endl;
+				cout << ((userChoice == '1') ? "1" : "2") << endl;
 				break;
 			}
-			(userChoise == '1') ? que1->Peek(n) : que2->Peek(n);
+			cout<<"Это элемент "<<((userChoice == '1') ? que1->Peek(n) : que2->Peek(n));
+			cout << endl;
 			break;
 		case 3:
 			cout << "Выберите очередь 1 или 2: ";
-			char userChoise;
-			cin >> userChoise;
+			cin >> userChoice;
 			cout << "Её размер ";
-			cout<< (userChoise == '1') ? que1->Size() : que2->Size();
+			cout << ((userChoice == '1') ? que1->Size() : que2->Size());
 			cout << endl;
 			break;
 		case 4:
 			cout << "Выберите очередь 1 или 2: ";
-			char userChoise;
-			cin >> userChoise;
-			(userChoise == '1') ? que1->map(mupFunc): que2->map(mupFunc);
+			cin >> userChoice;
+			(userChoice == '1') ? que1->map(mapFunc) : que2->map(mapFunc);
 			break;
 		case 5:
 			cout << "Выберите очередь 1 или 2: ";
-			char userChoise;
-			cin >> userChoise;
-			(userChoise == '1') ? que1->where(mupFunc) : que2->where(mupFunc);
+			cin >> userChoice;
+			(userChoice == '1') ? que1->wwhere(whereStringFunc) : que2->wwhere(whereStringFunc);
 			break;
 		case 6:
-			que1 = que1->Concat(que2);
+			que1 = que1->Concat(*que2);
 			break;
 		case 7:
 			cout << "Выберите очередь 1 или 2: ";
-			char userChoise;
-			cin >> userChoise;
+			cin >> userChoice;
 			cout << "Введите элемент номер первого индекса: ";
-			int n1;
 			cin >> n1;
 			cout << "Введите элемент номер второго индекса: ";
-			int n2;
 			cin >> n2;
-			int SubSize = n2 - n1;
-			if (n1<0 || SubSize<0 || userChoise == '1' && SubSize>que1->Size() || SubSize>que2->Size())
+			SubSize = n2 - n1;
+			if (n1<0 || SubSize<0 || userChoice == '1' && SubSize>que1->Size() || SubSize>que2->Size()&&userChoice != '1')
 			{
 				cout << "Нльзя извлечь подпоследовательность с такими индексами из очереди ";
-				cout << (userChoise == '1') ? "1" : "2" << endl;
+				cout << ( (userChoice == '1') ? "1" : "2" ) << endl;
 				break;
 			}
-			(userChoise == '1') ? que1 = que1->GetSubsequence(n1,n2) : que2 = que2->GetSubsequence(n1, n2);
+			(userChoice == '1') ? que1 = que1->GetSubsequence(n1, n2) : que2 = que2->GetSubsequence(n1, n2);
 			break;
 		case 8:
 			cout << "Выберите очередь для поиска её в другой 1 или 2: ";
-			char userChoise;
-			cin >> userChoise;
+			cin >> userChoice;
 			bool flag;
-			flag = (userChoise == '1') ? que2->SubSequenceSearch(que1) : que1->SubSequenceSearch(que2);
-			cout << flag ? "Является подочередью" : "Не является подочередью";
+			flag = ((userChoice == '1') ? que2->SubSequenceSearch(*que1) : que1->SubSequenceSearch(*que2));
+			cout << (flag ? "Является подочередью" : "Не является подочередью")<<endl;
 			break;
 		case 9:
 			cout << "Выберите очередь 1 или 2: ";
-			char userChoise;
-			cin >> userChoise;
+			cin >> userChoice;
 			cout << "Элемент " << endl;
-			//printData((userChoise == '1') ? que1->pop() : que2->pop());
-			cout<<" удалён из очереди"<<endl;
+			cout<<((userChoice == '1') ? que1->pop() : que2->pop());
+			cout << " удалён из очереди" << endl;
 			menuLab2_lvl_1_functions.waitingUserPressEnter();
 			break;
 		default:
 			break;
 		}
+		cout << "***Содержимое очередей после выполнения функции***" << endl;
 		cout << "Первая очередь" << endl;
 		que1->printQueue();
 		cout << "Вторая очередь" << endl;
 		que2->printQueue();
+		menuLab2_lvl_1_functions.waitingUserPressEnter();
 	} while (userType != 0);
 }
 
+int testQueueUI(int userType)
+{ 
+	switch (userType)
+	{
+	case 1: //Целые числа
+		cout << "Введите количество целых чисел" << endl;
+		
+		testQueue<int>();
+		break;
+	case 2: //Комплексные числа
+		cout << "Введите количество комплексных чисел" << endl;
+		testQueue<complexType>();
+		break;
+	case 3: //Строки
+		cout << "Введите количество строк" << endl;
+		testQueue<string>();
+		break;
+	default:
+		break;
+	}
+	return 0;
+}
