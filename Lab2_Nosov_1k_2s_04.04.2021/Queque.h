@@ -24,7 +24,7 @@ public:
     { 
         internalListSequence = new LinkedListSequence<T>; 
     }; 
-    Queue(const Queue<T>& que) // конструктор копирования
+    Queue(Queue<T>& que) // конструктор копирования
     {
         internalListSequence = new LinkedListSequence<T>;
         for (int i = 0; i< que.Size();i++)

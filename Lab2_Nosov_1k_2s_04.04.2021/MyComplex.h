@@ -8,11 +8,11 @@ using namespace std;
 class complex
 {
 private:
-    double re, im;
+    double real, imagine;
 public:
-    complex() { re = 0; im = 0; }
-    complex(double r, double i) { re = r; im = i; }
-    complex(const complex& ob) { re = ob.re; im = ob.im; };
+    complex() { real = 0; imagine = 0; }
+    complex(double r, double i) { real = r; imagine = i; }
+    complex(const complex& ob) { real = ob.real; imagine = ob.imagine; };
     complex& operator = (complex);
     complex operator + (complex);
     complex operator - (complex);

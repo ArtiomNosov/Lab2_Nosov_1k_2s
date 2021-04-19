@@ -68,6 +68,8 @@ public:
 	{
 		assert(newSize > 0);
 		T* newData = new T[newSize];
+		/*for (int i = 0; i < newSize; i++)
+			newData[i] = 0;*/
 		int tempSize= 0;
 		tempSize = (newSize > lenght) ? lenght : newSize;
 		for (int i = 0; i < tempSize; i++)
@@ -80,9 +82,10 @@ public:
 	{
 		assert(newSize > 0);
 		T* newData = new T[newSize];
-		int tempSize = 0;
-		tempSize = (newSize > lenght) ? lenght : newSize;
-		for (int i = 0; i < tempSize; i++)
+		/*for (int i = 0; i < newSize; i++)
+			newData[i] = 0;*/
+		int startIndex = (newSize > lenght)?(newSize - lenght):0;
+		for (int i = startIndex; i < newSize; i++)
 			newData[i] = data[i];
 		delete data;
 		data = newData;

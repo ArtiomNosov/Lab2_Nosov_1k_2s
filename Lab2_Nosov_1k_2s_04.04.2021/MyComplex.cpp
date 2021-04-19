@@ -1,37 +1,37 @@
 #include "MyComplex.h"
 
-bool complex:: operator > (complex& com)
+bool complex:: operator > (complex& complex)
 {
-    if (this->re > com.re)
+    if (this->real > complex.real)
         return 1;
-    else if (this->re == com.re && this->im > com.im)
+    else if (this->real == complex.real && this->imagine > complex.imagine)
         return 1;
     else
         return 0;
 }
 
-bool complex ::operator < (complex& com)
+bool complex ::operator < (complex& complex)
 {
-    if (this->re < com.re)
+    if (this->real < complex.real)
         return 1;
-    else if (this->re == com.re && this->im < com.im)
+    else if (this->real == complex.real && this->imagine < complex.imagine)
         return 1;
     else
         return 0;
 
 }
 
-bool complex::operator != (complex& com)
+bool complex::operator != (complex& complex)
 {
-    if (this->re != com.re || this->im != com.im)
+    if (this->real != complex.real || this->imagine != complex.imagine)
         return 1;
     else
         return 0;
 }
 
-bool complex::operator == (complex com)
+bool complex::operator == (complex complex)
 {
-    if (this->re == com.re && this->im == com.im)
+    if (this->real == complex.real && this->imagine == complex.imagine)
         return 1;
     else
         return 0;
@@ -39,91 +39,91 @@ bool complex::operator == (complex com)
 
 
 
-complex complex::operator*(complex& com)
+complex complex::operator*(complex& complex)
 {
     double i, j;
-    i = re * com.re - im * com.im;
-    j = re * com.im + com.re * im;
-    re = i;
-    im = j;
+    i = real * complex.real - imagine * complex.imagine;
+    j = real * complex.imagine + complex.real * imagine;
+    real = i;
+    imagine = j;
     return *this;
 }
 
-complex complex::operator/(complex& com)
+complex complex::operator/(complex& complex)
 {
     double i, j, k;
-    k = re * re + com.im * com.im;
-    i = (re * com.re + im * com.im) / k;
-    j = (com.re * im - re * com.im) / k;
-    re = i;
-    im = j;
+    k = real * real + complex.imagine * complex.imagine;
+    i = (real * complex.real + imagine * complex.imagine) / k;
+    j = (complex.real * imagine - real * complex.imagine) / k;
+    real = i;
+    imagine = j;
     return *this;
 }
 
-complex& complex::operator =(complex com)
+complex& complex::operator =(complex complex)
 {
-    this->re = com.re;
-    this->im = com.im;
+    this->real = complex.real;
+    this->imagine = complex.imagine;
     return *this;
 }
 
-complex complex::operator+(complex com)
+complex complex::operator+(complex complex)
 {
-    this->re = this->re + com.re;
-    this->im = this->im + com.im;
+    this->real = this->real + complex.real;
+    this->imagine = this->imagine + complex.imagine;
     return *this;
 }
 
-complex complex::operator-(complex com)
+complex complex::operator-(complex complex)
 {
-    this->re = this->re - com.re;
-    this->im = this->im - com.im;
+    this->real = this->real - complex.real;
+    this->imagine = this->imagine - complex.imagine;
     return *this;
 }
 
 
-std::ostream& operator << (std::ostream& out, const complex& com)
+std::ostream& operator << (std::ostream& out, const complex& complex)
 {
-    if (com.im < 0)
-        out << com.re << "+i(" << com.im << ")";
+    if (complex.imagine < 0)
+        out << complex.real << "+i(" << complex.imagine << ")";
     else
-        out << com.re << "+i" << com.im;
+        out << complex.real << "+i" << complex.imagine;
     return out;
 }
 
-std::istream& operator >> (std::istream& in, complex& com)
+std::istream& operator >> (std::istream& in, complex& complex)
 {
     std::cout << "¬ведите действительную часть комплексного числа: ";
-    in >> com.re;
+    in >> complex.real;
     std::cout << "¬ведите мнимую часть комплексного числа: ";
-    in >> com.im;
+    in >> complex.imagine;
     return in;
 }
 
 complex& complex::operator+=(complex a)
 {
-    re += a.re;
-    im += a.im;
+    real += a.real;
+    imagine += a.imagine;
     return *this;
 }
 
 complex& complex::operator-=(complex a)
 {
-    re -= a.re;
-    im -= a.im;
+    real -= a.real;
+    imagine -= a.imagine;
     return *this;
 }
 
 complex& complex::operator*=(complex a)
 {
-    re *= a.re;
-    im *= a.im;
+    real *= a.real;
+    imagine *= a.imagine;
     return *this;
 }
 
 complex& complex::operator/=(complex a)
 {
-    re /= a.re;
-    im /= a.im;
+    real /= a.real;
+    imagine /= a.imagine;
     return *this;
 }
