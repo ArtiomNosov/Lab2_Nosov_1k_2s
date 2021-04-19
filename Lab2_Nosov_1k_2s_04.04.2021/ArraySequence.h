@@ -100,7 +100,7 @@ public:
 			items->Set(i + items->GetSize(),((ArraySequence <T>*)list)->Get(i));
 		return (Sequence <T>*)buf;
 	}
-	/*bool subsequenceSearch()
+	/*bool subsequenceSearch()1
 	{
 
 	}*/
