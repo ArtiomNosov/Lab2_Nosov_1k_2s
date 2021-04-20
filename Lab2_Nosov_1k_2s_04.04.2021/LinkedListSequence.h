@@ -8,9 +8,13 @@ private:
 	LinkedList<T>* internalList;
 public:
 	//Конструкторы
-	LinkedListSequence(LinkedList <T>& list)
+	LinkedListSequence(LinkedListSequence <T>& list)
 	{
-		internalList = new LinkedList<T>(list);
+		internalList = new LinkedList<T>;
+		for (int i = 0; i < list.GetLength(); i++)
+		{
+			this->Append(list.Get(i));
+		}
 	};
 	LinkedListSequence()
 	{ 
@@ -21,10 +25,10 @@ public:
 		internalList = new LinkedList<T>(items, count);
 	};
 	// Деструктор
-	~LinkedListSequence()
+	/*~LinkedListSequence()
 	{
 		delete internalList;
-	}
+	}*/
 
 	T GetFirst()
 	{
@@ -40,9 +44,14 @@ public:
 	}
 	LinkedListSequence<T>* GetSubsequence(int startIndex, int endIndex)
 	{
-		LinkedListSequence<T>* bufList = new LinkedListSequence<T>;
-		((LinkedListSequence<T>*)bufList)->internalList = internalList->GetSubList(startIndex, endIndex);
-		return bufList;
+		LinkedList<T>* bufList = new LinkedList<T>(*(internalList->GetSubList(startIndex, endIndex)));
+		LinkedListSequence<T>* bufListSeq = new LinkedListSequence<T>;
+		for (int i = 0; i < bufList->GetLength(); i++)
+		{
+			bufListSeq->Append(bufList->Get(i));
+		}
+		delete bufList;
+		return (LinkedListSequence<T>*)bufListSeq;
 	}
 	int GetLength()
 	{
@@ -66,15 +75,18 @@ public:
 	}
 	Sequence <T>* Concat(Sequence <T>* list)
 	{
-		internalList->Concat(((LinkedListSequence<T> *)list)->internalList);
+		for (int i = 0; i < ((LinkedListSequence<T>*)list)->GetLength(); i++)
+		{
+			this->Append(((LinkedListSequence<T>*)list)->Get(i));
+		}
 		return (Sequence <T>*)this;
 	}
 	LinkedListSequence<T>* wwhere(bool (*whereFunc)(T))
 	{
 		LinkedListSequence<T>* buf = new LinkedListSequence<T>;
-		for (int i = 0; i < GetLength(); i++)
+		for (int i = 0; i < this->GetLength(); i++)
 		{
-			if ( whereFunc(Get(i)) ) buf->Append(Get(i));
+			if ( whereFunc(this->Get(i)) ) buf->Append(this->Get(i));
 		}
 		return (LinkedListSequence<T>*)buf;
 	}

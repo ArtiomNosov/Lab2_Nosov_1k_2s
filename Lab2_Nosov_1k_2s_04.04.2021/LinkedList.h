@@ -39,11 +39,10 @@ public:
 		}
 	}
 	// TODO: Сделать реализацию LinkedList
-	LinkedList(const LinkedList <T>& list)  // Копирующий конструктор
+	LinkedList(LinkedList <T>& list)  // Копирующий конструктор
 	{
 		head = NULL;
 		tail = NULL;
-
 		for (int i = 0; i < list.lenght; i++)
 		{
 			Append(list.Get(i));
@@ -58,7 +57,7 @@ public:
 	{
 		return T(tail->data);
 	}
-	Item<T>* operator[](const int index)
+	Item<T>* operator[](int index)
 	{
 		if (index == 0 && lenght == 0)
 			return NULL;
@@ -98,7 +97,6 @@ public:
 	{
 		assert(startIndex >= 0);
 		assert(endIndex <= lenght);
-
 		LinkedList<T>* buf = new LinkedList<T>();
 		for (int i = startIndex; i <= endIndex; i++)
 		{
@@ -176,6 +174,7 @@ public:
 		assert(index>=0);
 		assert(index < lenght); //
 		Item<T>* itemBefor = (*this)[index];
+
 		if (itemBefor == NULL)
 			Append(item);
 		else
@@ -184,8 +183,8 @@ public:
 			buf->data = item;
 			buf->previous = itemBefor;
 			buf->next = itemBefor->next;
-			itemBefor->next = buf;
 			itemBefor->next->previous = buf;
+			itemBefor->next = buf;
 			lenght++;
 		}
 

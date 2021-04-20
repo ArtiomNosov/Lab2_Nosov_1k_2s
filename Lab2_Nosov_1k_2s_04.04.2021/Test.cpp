@@ -15,7 +15,8 @@ complex mupFuncComplex(complex a)
 
 bool whereFunc(complex a)
 {
-	return (a * a == a / a);
+	complex d {2.0, 2.0};
+	return (a == d);
 }
 BOOST_AUTO_TEST_CASE(testDynamicArray)
 {
@@ -31,7 +32,8 @@ BOOST_AUTO_TEST_CASE(testDynamicArray)
 	// Test for ResizeRight
 	DynArr1.ResizeRight(11);
 	BOOST_CHECK(DynArr1.GetSize()==11);
-	BOOST_CHECK(DynArr1.Get(0) == 0);
+	DynArr1.Set(0, arr[0]);
+	BOOST_CHECK(DynArr1.Get(0) == arr[0]);
 	int elemSum1 = 0;
 	int elemSum2 = 0;
 	for (int i = 0; i < 11; i++)
@@ -42,7 +44,7 @@ BOOST_AUTO_TEST_CASE(testDynamicArray)
 	{
 		elemSum2 += DynArr1.Get(i);
 	}
-	BOOST_CHECK(elemSum1 == elemSum2);
+	BOOST_CHECK(elemSum1 == elemSum2+arr[0]);
 }
 
 BOOST_AUTO_TEST_CASE(testArraySequence)
@@ -167,24 +169,26 @@ BOOST_AUTO_TEST_CASE(testLinkedListSequence)
 	{
 		BOOST_CHECK(linkedListSeq1->Get(i) == linkedListSeq2->Get(i));
 	}
-	// 义耱 LinkedListSequence<T>* GetSubsequence(int startIndex, int endIndex)
+	// 义耱 LinkedListSequence<T>* GetSubsequence(int startIndex, int endIndex)=
 	int startIndexSub = ITEMS_COUNT / 4;
 	int endIndexSub = ITEMS_COUNT / 2;
 	delete linkedListSeq2;
 	linkedListSeq2 = new LinkedListSequence<complex>(*linkedListSeq1);
-	linkedListSeq1->GetSubsequence(startIndexSub, endIndexSub);
-	for (int i = 0; i < ITEMS_COUNT; i++)
+	delete linkedListSeq3;
+	linkedListSeq3 = new LinkedListSequence<complex>(*(linkedListSeq1->GetSubsequence(startIndexSub, endIndexSub)));
+	for (int i = 0; i < (linkedListSeq3->GetLength()); i++)
 	{
-		BOOST_CHECK(linkedListSeq1->Get(i) == linkedListSeq2->Get(i+ startIndexSub));
+		BOOST_CHECK((linkedListSeq3->Get(i)) == (linkedListSeq2->Get(i + startIndexSub)));
 	}
 	// 义耱 int GetLength()
-	BOOST_CHECK(linkedListSeq3->GetLength() == ITEMS_COUNT);
+	BOOST_CHECK(linkedListSeq2->GetLength() == ITEMS_COUNT);
 	// 义耱 void Set(int index, T data)
-	complex c1 = linkedListSeq3->Get(0);
+	complex* c1 = new complex;
+	*c1 = linkedListSeq3->Get(0);
 	int indexDif = 0;
 	for (int i = 0; i < linkedListSeq3->GetLength(); i++)
 	{
-		if (linkedListSeq3->Get(i)!=c1)
+		if (linkedListSeq3->Get(i)!=*c1)
 		{
 			indexDif = i;
 			break;
@@ -192,14 +196,14 @@ BOOST_AUTO_TEST_CASE(testLinkedListSequence)
 	}
 	if (indexDif == 0)
 	{
-		linkedListSeq3->Set(linkedListSeq3->GetLength() - 1, c1 + linkedListSeq3->Get(linkedListSeq3->GetLength() - 1));
-		linkedListSeq3->Set(linkedListSeq3->GetLength() - 1, c1);
-		BOOST_CHECK(linkedListSeq3->Get(linkedListSeq3->GetLength() - 1)==c1);
+		linkedListSeq3->Set(linkedListSeq3->GetLength() - 1, *c1 + linkedListSeq3->Get(linkedListSeq3->GetLength() - 1));
+		linkedListSeq3->Set(linkedListSeq3->GetLength() - 1, *c1);
+		BOOST_CHECK(linkedListSeq3->Get(linkedListSeq3->GetLength() - 1)==*c1);
 	}
 	else
 	{
-		linkedListSeq3->Set(indexDif, c1);
-		BOOST_CHECK(linkedListSeq3->Get(indexDif) == c1);
+		linkedListSeq3->Set(indexDif, *c1);
+		BOOST_CHECK(linkedListSeq3->Get(indexDif) == *c1);
 	}
 	// 义耱 void Append(T item)
 	int oldSizeAppend = linkedListSeq3->GetLength();
@@ -213,14 +217,18 @@ BOOST_AUTO_TEST_CASE(testLinkedListSequence)
 	BOOST_CHECK(linkedListSeq3->Get(0) == linkedListSeq3->Get(1));
 	// 义耱 void InsertAt(T item, int index)
 	oldSizeAppend = linkedListSeq3->GetLength();
-	linkedListSeq3->Set(0, c1);
-	linkedListSeq3->Set(1, c1 + c1);
-	linkedListSeq3->InsertAt(linkedListSeq3->Get(0)+linkedListSeq3->Get(1), 0);
+	complex* c2 = new complex;
+	*c2 = complexArr[4];
+	complex* c3 = new complex;
+	*c3 = complexArr[5];
+	linkedListSeq3->Set(0, *c1);
+	linkedListSeq3->Set(1, *c2);
+	linkedListSeq3->InsertAt(*c3, 0);
 	BOOST_CHECK(linkedListSeq3->GetLength() - 1 == oldSizeAppend);
-	BOOST_CHECK(linkedListSeq3->Get(0) == c1);
-	BOOST_CHECK(linkedListSeq3->Get(1) == c1 + c1 + c1);
-	BOOST_CHECK(linkedListSeq3->Get(2) == c1 + c1);
-	// Sequence <T>* Concat(Sequence <T>* list)
+	BOOST_CHECK(linkedListSeq3->Get(0) == *c1);
+	BOOST_CHECK(linkedListSeq3->Get(1) == *c3);
+	BOOST_CHECK(linkedListSeq3->Get(2) == *c2);
+	// 义耱 Sequence <T>* Concat(Sequence <T>* list)
 	delete linkedListSeq1;
 	linkedListSeq1 = new LinkedListSequence<complex>(*linkedListSeq2);
 	linkedListSeq2->Concat(linkedListSeq3);
@@ -236,7 +244,7 @@ BOOST_AUTO_TEST_CASE(testLinkedListSequence)
 	int countRetTrueData = 0;
 	delete linkedListSeq1;
 	linkedListSeq1 = new LinkedListSequence<complex>;
-	for (int i = 0; i < ITEMS_COUNT; i++)
+	for (int i = 0; i < linkedListSeq2->GetLength(); i++)
 	{
 		if (whereFunc(linkedListSeq2->Get(i)))
 		{
@@ -244,11 +252,12 @@ BOOST_AUTO_TEST_CASE(testLinkedListSequence)
 			linkedListSeq1->Append(linkedListSeq2->Get(i));
 		}
 	}
-	linkedListSeq2->wwhere(whereFunc);
-	BOOST_CHECK(linkedListSeq2->GetLength() == countRetTrueData);
-	for (int i = 0; i < linkedListSeq2->GetLength(); i++)
+	delete linkedListSeq3;
+	linkedListSeq3 = linkedListSeq2->wwhere(whereFunc);
+	BOOST_CHECK(linkedListSeq3->GetLength() == countRetTrueData);
+	for (int i = 0; i < linkedListSeq3->GetLength(); i++)
 	{
-		BOOST_CHECK(linkedListSeq2->Get(i) == linkedListSeq1->Get(i));
+		BOOST_CHECK(linkedListSeq3->Get(i) == linkedListSeq1->Get(i));
 	}
 }
 
