@@ -38,7 +38,6 @@ public:
 	{
 		return internalList->Get(index);
 	}
-	// TODO:Вставить конструктор, чтобы пользователь получал указатель на новый Sequence
 	LinkedListSequence<T>* GetSubsequence(int startIndex, int endIndex)
 	{
 		LinkedListSequence<T>* bufList = new LinkedListSequence<T>;

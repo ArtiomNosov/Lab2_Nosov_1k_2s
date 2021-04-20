@@ -110,18 +110,146 @@ BOOST_AUTO_TEST_CASE(testArraySequence)
 	BOOST_CHECK(arrSeq3->GetFirst() == elem0);
 	BOOST_CHECK(arrSeq3->Get(1) == elemInsert);
 	BOOST_CHECK(arrSeq3->Get(2) == elem1);
-	// 义耱 
-
-	// 义耱 
-
-	// 义耱 
-
-	// 义耱 
+	// 义耱 Sequence <T>* Concat(Sequence <T>* list)
+	delete arrSeq2;
+	arrSeq2 = new ArraySequence<complex>(*arrSeq3);
+	arrSeq3->Concat(arrSeq4);
+	for (int i = 0; i < arrSeq2->GetLength(); i++)
+	{
+		BOOST_CHECK(arrSeq3->Get(i) == arrSeq2->Get(i));
+	}
+	for (int i = 0; i < arrSeq4->GetLength(); i++)
+	{
+		BOOST_CHECK(arrSeq3->Get(i + arrSeq2->GetLength()) == arrSeq4->Get(i));
+	}
+	// 义耱 void Resize(int newSize)
+	int sizeBefResizeArr3 = arrSeq3->GetLength();
+	arrSeq3->Resize(sizeBefResizeArr3+1);
+	BOOST_CHECK(arrSeq3->GetLength() == sizeBefResizeArr3 + 1);
+	// 义耱 void ResizeRight(int newSize)
+	int sizeBefRightResizeArr3 = arrSeq3->GetLength();
+	arrSeq3->ResizeRight(sizeBefResizeArr3 + 1);
+	BOOST_CHECK(arrSeq3->GetLength() == sizeBefResizeArr3 + 1);
 }
 
 BOOST_AUTO_TEST_CASE(testLinkedListSequence)
 {
-	LinkedListSequence<complex>* LinListSeq1 = new LinkedListSequence<complex>;
+	complex complexArr[ITEMS_COUNT];
+	complex endIndex(ITEMS_COUNT, ITEMS_COUNT);
+	complex add(1, 1);
+	int counterJ = 0;
+	for (complex i(0, 0); i < endIndex; i += add, counterJ++)
+	{
+		complexArr[counterJ] = i;
+	}
+	// 义耱 LinkedListSequence()
+	LinkedListSequence<complex>* linkedListSeq1 = new LinkedListSequence<complex>;
+	// 义耱 LinkedListSequence(T* items, int count)
+	LinkedListSequence<complex>* linkedListSeq2 = new LinkedListSequence<complex>(complexArr, ITEMS_COUNT);
+	for (int i = 0; i < ITEMS_COUNT; i++)
+	{
+		BOOST_CHECK(linkedListSeq2->Get(i) == complexArr[i]);
+	}
+	// 义耱 LinkedListSequence(LinkedList <T>& list)
+	LinkedListSequence<complex>* linkedListSeq3 = new LinkedListSequence<complex>(*linkedListSeq2);
+	for (int i = 0; i < ITEMS_COUNT; i++)
+	{
+		BOOST_CHECK(linkedListSeq3->Get(i) == complexArr[i]);
+	}
+	// 义耱 T GetFirst()
+	BOOST_CHECK(linkedListSeq3->GetFirst() == complexArr[0]);
+	// 义耱 T GetLast()
+	BOOST_CHECK(linkedListSeq3->GetLast() == complexArr[ITEMS_COUNT-1]);
+	// 义耱 T Get(int index)
+	delete linkedListSeq1;
+	linkedListSeq1 = new LinkedListSequence<complex>(*linkedListSeq2);
+	for (int i = 0; i < ITEMS_COUNT; i++)
+	{
+		BOOST_CHECK(linkedListSeq1->Get(i) == linkedListSeq2->Get(i));
+	}
+	// 义耱 LinkedListSequence<T>* GetSubsequence(int startIndex, int endIndex)
+	int startIndexSub = ITEMS_COUNT / 4;
+	int endIndexSub = ITEMS_COUNT / 2;
+	delete linkedListSeq2;
+	linkedListSeq2 = new LinkedListSequence<complex>(*linkedListSeq1);
+	linkedListSeq1->GetSubsequence(startIndexSub, endIndexSub);
+	for (int i = 0; i < ITEMS_COUNT; i++)
+	{
+		BOOST_CHECK(linkedListSeq1->Get(i) == linkedListSeq2->Get(i+ startIndexSub));
+	}
+	// 义耱 int GetLength()
+	BOOST_CHECK(linkedListSeq3->GetLength() == ITEMS_COUNT);
+	// 义耱 void Set(int index, T data)
+	complex c1 = linkedListSeq3->Get(0);
+	int indexDif = 0;
+	for (int i = 0; i < linkedListSeq3->GetLength(); i++)
+	{
+		if (linkedListSeq3->Get(i)!=c1)
+		{
+			indexDif = i;
+			break;
+		}
+	}
+	if (indexDif == 0)
+	{
+		linkedListSeq3->Set(linkedListSeq3->GetLength() - 1, c1 + linkedListSeq3->Get(linkedListSeq3->GetLength() - 1));
+		linkedListSeq3->Set(linkedListSeq3->GetLength() - 1, c1);
+		BOOST_CHECK(linkedListSeq3->Get(linkedListSeq3->GetLength() - 1)==c1);
+	}
+	else
+	{
+		linkedListSeq3->Set(indexDif, c1);
+		BOOST_CHECK(linkedListSeq3->Get(indexDif) == c1);
+	}
+	// 义耱 void Append(T item)
+	int oldSizeAppend = linkedListSeq3->GetLength();
+	linkedListSeq3->Append(linkedListSeq3->Get(oldSizeAppend-1));
+	BOOST_CHECK(linkedListSeq3->GetLength()-1 == oldSizeAppend);
+	BOOST_CHECK(linkedListSeq3->Get(oldSizeAppend - 1) == linkedListSeq3->Get(linkedListSeq3->GetLength()-1));
+	// 义耱 void Prepend(T item)
+	oldSizeAppend = linkedListSeq3->GetLength();
+	linkedListSeq3->Prepend(linkedListSeq3->Get(0));
+	BOOST_CHECK(linkedListSeq3->GetLength()-1 == oldSizeAppend);
+	BOOST_CHECK(linkedListSeq3->Get(0) == linkedListSeq3->Get(1));
+	// 义耱 void InsertAt(T item, int index)
+	oldSizeAppend = linkedListSeq3->GetLength();
+	linkedListSeq3->Set(0, c1);
+	linkedListSeq3->Set(1, c1 + c1);
+	linkedListSeq3->InsertAt(linkedListSeq3->Get(0)+linkedListSeq3->Get(1), 0);
+	BOOST_CHECK(linkedListSeq3->GetLength() - 1 == oldSizeAppend);
+	BOOST_CHECK(linkedListSeq3->Get(0) == c1);
+	BOOST_CHECK(linkedListSeq3->Get(1) == c1 + c1 + c1);
+	BOOST_CHECK(linkedListSeq3->Get(2) == c1 + c1);
+	// Sequence <T>* Concat(Sequence <T>* list)
+	delete linkedListSeq1;
+	linkedListSeq1 = new LinkedListSequence<complex>(*linkedListSeq2);
+	linkedListSeq2->Concat(linkedListSeq3);
+	for (int i = 0; i < linkedListSeq1->GetLength(); i++)
+	{
+		BOOST_CHECK(linkedListSeq1->Get(i) == linkedListSeq2->Get(i));
+	}
+	for (int i = 0; i < linkedListSeq3->GetLength(); i++)
+	{
+		BOOST_CHECK(linkedListSeq2->Get(i + linkedListSeq1->GetLength()) == linkedListSeq3->Get(i));
+	}
+	// LinkedListSequence<T>* wwhere(bool (*whereFunc)(T))
+	int countRetTrueData = 0;
+	delete linkedListSeq1;
+	linkedListSeq1 = new LinkedListSequence<complex>;
+	for (int i = 0; i < ITEMS_COUNT; i++)
+	{
+		if (whereFunc(linkedListSeq2->Get(i)))
+		{
+			countRetTrueData++;
+			linkedListSeq1->Append(linkedListSeq2->Get(i));
+		}
+	}
+	linkedListSeq2->wwhere(whereFunc);
+	BOOST_CHECK(linkedListSeq2->GetLength() == countRetTrueData);
+	for (int i = 0; i < linkedListSeq2->GetLength(); i++)
+	{
+		BOOST_CHECK(linkedListSeq2->Get(i) == linkedListSeq1->Get(i));
+	}
 }
 
 BOOST_AUTO_TEST_CASE(testQueue)

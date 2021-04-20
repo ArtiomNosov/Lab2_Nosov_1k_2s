@@ -95,19 +95,19 @@ public:
 	Sequence <T>* Concat(Sequence <T>* list)
 	{
 		Sequence <T>* buf = NULL;
-		items->Resize(items->GetSize() + ((ArraySequence <T>*)list)->items->GetSize());
+		int oldLenght = this->GetLength();
+		this->Resize(this->GetLength() + ((ArraySequence <T>*)list)->GetLength());
 		for (int i = 0 ;i < ((ArraySequence <T>*)list)->GetLength(); i++)
-			items->Set(i + items->GetSize(),((ArraySequence <T>*)list)->Get(i));
+			this->Set(i + oldLenght,((ArraySequence <T>*)list)->Get(i));
 		return (Sequence <T>*)buf;
 	}
-	/*bool1 subsequenceSearch()111
+	/*bool1 subsequenceSearch()1111
 	{
 
 	}*/
 	void Resize(int newSize)
 	{
 		items->Resize(newSize);
-		
 	}
 	void ResizeRight(int newSize)
 	{
